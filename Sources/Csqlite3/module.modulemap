@@ -1,0 +1,40 @@
+module CSQLite2 {
+    header "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sqlite3.h"
+    link "sqlite3"
+    export *
+}
+
+
+module "C_sfmt" {
+    export *
+
+    header "/tmp/external/ccv/lib/3rdparty/sfmt/SFMT-common.h"
+    header "/tmp/external/ccv/lib/3rdparty/sfmt/SFMT-params.h"
+    header "/tmp/external/ccv/lib/3rdparty/sfmt/SFMT-params19937.h"
+    header "/tmp/external/ccv/lib/3rdparty/sfmt/SFMT.h"
+
+}
+
+module "lib_nnc_mps_compat" {
+    export *
+    header "/tmp/external/ccv/lib/nnc/mps/ccv_nnc_mps.h"
+}
+
+module "lib_cmd_mps" {
+    export *
+    use "lib_nnc_mps_compat"
+}
+
+
+
+module "C_nnc" {
+    export *
+
+    header "/tmp/external/ccv/lib/nnc/ccv_nnc.h"
+    header "/tmp/external/ccv/lib/nnc/ccv_nnc_easy.h"
+    header "/tmp/external/ccv/lib/nnc/ccv_nnc_internal.h"
+
+    use "C_sfmt"
+    use "lib_cmd_mps"
+    use "lib_nnc_mps_compat"
+}
